@@ -19,8 +19,9 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
+  LOAD_IMAGES,
   CURRENT_ITEM_CHANGED,
-  CURRENT_ITEMS_CHANGED,
+  CURRENT_CATEGORY_CHANGED,
 } from './constants';
 
 /**
@@ -47,6 +48,13 @@ export function reposLoaded(repos, username) {
     type: LOAD_REPOS_SUCCESS,
     repos,
     username,
+  };
+}
+
+export function loadImages(images) {
+  return {
+    type: LOAD_IMAGES,
+    images,
   };
 }
 
@@ -78,9 +86,9 @@ export function currentItemChange(item) {
   };
 }
 
-export function currentItemsChange(items) {
+export function currentCategoryChange(category) {
   return {
-    type: CURRENT_ITEMS_CHANGED,
-    items,
+    type: CURRENT_CATEGORY_CHANGED,
+    category,
   };
 }

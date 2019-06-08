@@ -5,18 +5,19 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import ItemsContainer from './ItemsContainer';
 import ListItem from './ListItem';
-import Img from './Img';
 import Wrapper from './Wrapper';
+import Img from './Img';
 
-import { currentItemChange, currentItemsChange } from '../App/actions';
+import { currentItemChange, currentCategoryChange } from '../App/actions';
 import {
   makeSelectCurrentItem,
-  makeSelectCurrentItems,
+  makeSelectCurrentCategory,
+  makeSelectImages,
 } from '../App/selectors';
 
-const ItemsPage = ({ currentItems, onCurrentItemChanged }) => (
+const ItemsPage = ({ currentCategory, onCurrentItemChanged, images }) => (
   <ItemsContainer>
-    {currentItems.map(item => (
+    {currentCategory.map(item => (
       <Wrapper key={`wrapper:${item.id}`}>
         <ListItem
           key={item.id}
@@ -27,8 +28,8 @@ const ItemsPage = ({ currentItems, onCurrentItemChanged }) => (
           <Img
             key={`img:${item.id}`}
             // eslint-disable-next-line global-require
-            src={require(`${item.img}`)}
-            alt=""
+            src={images[`${item.img}.png`]}
+            alt={item.name}
           />
           <div key={item.name}>{item.name}</div>
         </ListItem>
@@ -38,19 +39,22 @@ const ItemsPage = ({ currentItems, onCurrentItemChanged }) => (
 );
 
 ItemsPage.propTypes = {
-  currentItems: PropTypes.array,
+  currentCategory: PropTypes.array,
   onCurrentItemChanged: PropTypes.func,
+  images: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentItems: makeSelectCurrentItems(),
+  currentItems: makeSelectCurrentCategory(),
   currentItem: makeSelectCurrentItem(),
+  images: makeSelectImages(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onCurrentItemChanged: item => dispatch(currentItemChange(item)),
-    onCurrentItemsChanged: items => dispatch(currentItemsChange(items)),
+    onCurrentItemsChanged: category =>
+      dispatch(currentCategoryChange(category)),
   };
 }
 

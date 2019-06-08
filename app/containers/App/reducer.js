@@ -14,7 +14,8 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
   CURRENT_ITEM_CHANGED,
-  CURRENT_ITEMS_CHANGED,
+  CURRENT_CATEGORY_CHANGED,
+  LOAD_IMAGES,
 } from './constants';
 
 // The initial state of the App
@@ -25,9 +26,10 @@ export const initialState = {
   userData: {
     repositories: false,
   },
+  images: {},
   data,
   currentItem: {},
-  currentItems: [],
+  currentCategory: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -51,12 +53,16 @@ const appReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
 
+      case LOAD_IMAGES:
+        draft.images = action.images;
+        break;
+
       case CURRENT_ITEM_CHANGED:
         draft.currentItem = action.item;
         break;
 
-      case CURRENT_ITEMS_CHANGED:
-        draft.currentItems = action.items;
+      case CURRENT_CATEGORY_CHANGED:
+        draft.currentCategory = action.Category;
         break;
     }
   });
